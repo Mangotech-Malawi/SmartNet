@@ -1,288 +1,306 @@
-<!doctype html>
-<html class="no-js" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>SmartNet</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Net</title>
+
   <script>
     if (sessionStorage.getItem("token") === null) {
       window.location = "index.html";
     }
   </script>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- favicon
-		============================================ -->
-  <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
-  <!-- Google Fonts
-		============================================ -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
-  <!-- Bootstrap CSS
-		============================================ -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <!-- Bootstrap CSS
-		============================================ -->
-  <link rel="stylesheet" href="css/font-awesome.min.css">
-  <!-- nalika Icon CSS
-		============================================ -->
-  <link rel="stylesheet" href="css/nalika-icon.css">
-  <!-- owl.carousel CSS
-		============================================ -->
-  <link rel="stylesheet" href="css/owl.carousel.css">
-  <link rel="stylesheet" href="css/owl.theme.css">
-  <link rel="stylesheet" href="css/owl.transitions.css">
-  <!-- animate CSS
-		============================================ -->
-  <link rel="stylesheet" href="css/animate.css">
-  <!-- normalize CSS
-		============================================ -->
-  <link rel="stylesheet" href="css/normalize.css">
-  <!-- meanmenu icon CSS
-		============================================ -->
-  <link rel="stylesheet" href="css/meanmenu.min.css">
-  <!-- main CSS
-		============================================ -->
-  <link rel="stylesheet" href="css/main.css">
-  <!-- morrisjs CSS
-		============================================ -->
-  <link rel="stylesheet" href="css/morrisjs/morris.css">
-  <!-- mCustomScrollbar CSS
-		============================================ -->
-  <link rel="stylesheet" href="css/scrollbar/jquery.mCustomScrollbar.min.css">
-  <!-- metisMenu CSS
-		============================================ -->
-  <link rel="stylesheet" href="css/metisMenu/metisMenu.min.css">
-  <link rel="stylesheet" href="css/metisMenu/metisMenu-vertical.css">
-  <!-- calendar CSS
-		============================================ -->
-  <link rel="stylesheet" href="css/calendar/fullcalendar.min.css">
-  <link rel="stylesheet" href="css/calendar/fullcalendar.print.min.css">
-  <!-- style CSS
-		============================================ -->
-  <link rel="stylesheet" href="style.css">
-  <!-- responsive CSS
-		============================================ -->
-  <link rel="stylesheet" href="css/responsive.css">
-  <!-- modernizr JS
-		============================================ -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.6.4.js"></script>
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+
+  <style>
+    .overlay {
+      display: none;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      background: rgba(189, 189, 189, 0.8) url("dist/img/loader.gif") center no-repeat;
+    }
+
+    /* Turn off scrollbar when body element has the loading class */
+    body.loading {
+      overflow: hidden;
+    }
+
+    /* Make spinner image visible when body element has the loading class */
+    body.loading .overlay {
+      display: block;
+    }
+
+    .active {
+      background: rgb(219, 219, 219) !important;
+    }
+
+    #map {
+      height: 100vh;
+    }
+
+    .side-bar-h {
+      font-size: 11pt;
+    }
+
+    .custom-icon {
+      background-color: rgba(65, 81, 61, 0.7);
+      /* Use rgba() with the desired transparency value */
+      /* Customize the marker color */
+      border-radius: 10%;
+      /* Make the marker circular */
+    }
+
+    .custom-icon .icon-wrapper {
+      padding: 10px;
+    }
+
+    .custom-icon .icon-label {
+      display: block;
+      font-size: 12px;
+      /* Adjust the font size as desired */
+      color: #ffffff;
+      /* Customize the text color */
+      text-align: center;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+      /* Add text shadow for better visibility */
+    }
+  </style>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css" />
+  <!-- overlayScrollbars -->
+
+  <!-- Date range picker -->
+  <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css" />
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css" />
+
+  <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css" />
+
+  <!-- DataTables -->
+  <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" />
+  <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css" />
+  <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css" />
+
+  <link rel="stylesheet" href="plugins/datatables-fixedheader/css/fixedHeader.bootstrap4.css" />
+
+
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" />
+
+  <!-- Tempusdominus Bootstrap 4 -->
+  <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css" />
+  <!-- Select2 -->
+  <link rel="stylesheet" href="plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css" />
+  <!-- Bootstrap4 Duallistbox -->
+  <link rel="stylesheet" href="plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css" />
+  <!-- BS Stepper -->
+  <link rel="stylesheet" href="plugins/bs-stepper/css/bs-stepper.min.css" />
+  <!-- dropzonejs -->
+  <link rel="stylesheet" href="plugins/dropzone/min/dropzone.min.css" />
+  <link rel="stylesheet" href="plugins/select2/css/select2.min.css" />
+
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css" />
+  <link rel="stylesheet" href="dist/css/custom.css" />
+
 </head>
-  <script src="plugins/vendor/modernizr-2.8.3.min.js"></script>
-</head>
 
-<body>
-  <!--[if lt IE 8]>
-            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
+<body class="hold-transition  sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed sidebar-collapse">
+  <div class="overlay"></div>
+  <div class="wrapper">
 
-  <div class="left-sidebar-pro">
-    <nav id="sidebar" class="">
-      <div class="sidebar-header">
-        <h1 class="">SN</h1>
-      </div>
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-light navbar-expand ">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link text-dark" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" id="facility" class="nav-link text-dark text-bold"></a>
+        </li>
+      </ul>
 
-      <div class="left-custom-menu-adp-wrap comment-scrollbar">
-        <nav class="sidebar-nav left-sidebar-menu-pro">
-          <ul class="metismenu" id="sidebarLinks">
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+          <li id="my-profile-dropdown" class="nav-item dropdown ">
+            <a class="nav-link  text-sm" data-toggle="dropdown" href="#">
+              <i class="fas fa-user "></i> My Profile
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-left">
+              <span class="dropdown-item dropdown-header">Username</span>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-divider"></div>
+              <a id="lbl-username" href="#" class="dropdown-item text-dark">
+                <i class="fas fa-user"></i>
+                <span class="float-right text-muted text-sm"></span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" id="settings-link" class="dropdown-item" href="#">
+                <i class="fas fa-cog mr-2"></i> Settings
+              </a>
+              <div class="dropdown-divider"></div>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item" data-widget="fullscreen" href="#">
+                <i class="fas fa-expand-arrows-alt mr-2"></i> Fullscreen
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item" id="logout-link">
+                <i class="fas fa-lock mr-2"></i> Logout
+                <span class="float-right text-muted text-sm"></span>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
 
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-light-secondary elevation-4">
+      <!-- Brand Logo -->
+      <a href="#" class="brand-link">
+        <img src="dist/img/cholera.png" alt="AdminLTE Logo" class="brand-image img-thumbnail elevation-3 mt-1"
+          style="opacity: 0.8" />
+        <span class="brand-text side-bar-h mt-2 font-weight-bold">Smart Net </span>
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"
+            id="sidebarLinks">
+            <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
           </ul>
         </nav>
+        <!-- /.sidebar-menu -->
       </div>
-    </nav>
-  </div>
-  <!-- Start Welcome area -->
-  <div class="all-content-wrapper">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div class="logo-pro">
-            <a href="smartnet.html"><img class="main-logo" src="img/logo/logo.png" alt="" /></a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="header-advance-area">
-      <div class="header-top-area">
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
         <div class="container-fluid">
-          <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <div class="header-top-wraper">
-                <div class="row">
-                  <div class="col-lg-1 col-md-0 col-sm-1 col-xs-12">
-                    <div class="menu-switcher-pro">
-                      <button type="button" id="sidebarCollapse"
-                        class="btn bar-button-pro header-drl-controller-btn btn-info navbar-btn">
-                        <i class="icon nalika-menu-task"></i>
-                      </button>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-md-7 col-sm-6 col-xs-12">
-                    <div class="header-top-menu tabl-d-n">
-                      <div class="breadcome-heading">
-                        <form role="search" class="">
-                          <input type="text" placeholder="Search..." class="form-control">
-                          <a href=""><i class="fa fa-search"></i></a>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                    <div class="header-right-info">
-                      <ul class="nav navbar-nav mai-top-nav header-right-menu">
-
-                        <li class="nav-item">
-                          <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
-                            class="nav-link dropdown-toggle">
-                            <i class="icon nalika-user nalika-user-rounded header-riht-inf" aria-hidden="true"></i>
-                            <span class="admin-name">Settings</span>
-                            <i class="icon nalika-down-arrow nalika-angle-dw nalika-icon"></i>
-                          </a>
-                          <ul role="menu" class="dropdown-header-top author-log dropdown-menu animated zoomIn">
-                            <li><a href="register.html"><span class="icon nalika-home author-log-ic"></span>
-                                Register</a>
-                            </li>
-                            <li><a href="#"><span class="icon nalika-user author-log-ic"></span> My Profile</a>
-                            </li>
-                            <li><a href="lock.html"><span class="icon nalika-diamond author-log-ic"></span> Lock</a>
-                            </li>
-                            <li><a href="#"><span class="icon nalika-settings author-log-ic"></span> Settings</a>
-                            </li>
-                            <li><a id="logout" href="#"><span class="icon nalika-unlocked author-log-ic"></span> Log
-                                Out</a>
-                            </li>
-                          </ul>
-                        </li>
-
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 id="pageTitle" class="m-0"></h1>
             </div>
+            <!-- /.col -->
           </div>
+          <!-- /.row -->
         </div>
+        <!-- /.container-fluid -->
       </div>
-      <!-- Mobile Menu start -->
-      <div class="mobile-menu-area">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <div class="mobile-menu">
-                <nav id="dropdown">
-                  <ul class="mobile-menu-nav">
+      <!-- /.content-header -->
 
-                  </ul>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Mobile Menu end -->
-      <div class="breadcome-area">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-              <div class="breadcome-list">
-                <div class="row">
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <div class="breadcomb-wp">
-                      <div class="breadcomb-icon">
-                        <i class="icon nalika-diamond"></i>
-                      </div>
-                      <div class="breadcomb-ctn">
-                        <h2 id="title">Dashboard Two</h2>
-                        <p id="subtitle" class="subTitle">Welcome to Nalika <span class="bread-ntd">Admin Template</span></p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <div class="breadcomb-report">
-                      <button data-toggle="tooltip" data-placement="left" title="Download Report" class="btn"><i
-                          class="icon nalika-download"></i></button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <!-- Main content -->
+      <section id="mainContent" class="content"></section>
+      <!-- /.content -->
     </div>
-    <div id="mainContainer">
+    <!-- /.content-wrapper -->
 
-    </div>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
 
-    <div class="footer-copyright-area">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="footer-copy-right">
-              <p>Copyright © 2023 <a href="https://colorlib.com/wp/templates/">Asimenye</a> Final Project.</p>
-            </div>
-          </div>
-        </div>
+    <!-- Main Footer -->
+
+    <div id="modalContent"></div>
+
+    <footer class="main-footer">
+      <strong>Final Project<a href="https://adminlte.io"></a>.</strong>
+      All rights reserved.
+      <div class="float-right d-none d-sm-inline-block">
+        <b>Version</b> 1.0.0
       </div>
-    </div>
+    </footer>
   </div>
+  <!-- ./wrapper -->
 
-  <!-- jquery
-		============================================ -->
-  <script src="plugins/vendor/jquery-1.12.4.min.js"></script>
-  <!-- bootstrap JS
-		============================================ -->
-  <script src="plugins/bootstrap.min.js"></script>
-  <!-- wow JS
-		============================================ -->
-  <script src="plugins/wow.min.js"></script>
-  <!-- price-slider JS
-		============================================ -->
-  <script src="plugins/jquery-price-slider.js"></script>
-  <!-- meanmenu JS
-		============================================ -->
-  <script src="plugins/jquery.meanmenu.js"></script>
-  <!-- owl.carousel JS
-		============================================ -->
-  <script src="plugins/owl.carousel.min.js"></script>
-  <!-- sticky JS
-		============================================ -->
-  <script src="plugins/jquery.sticky.js"></script>
-  <!-- scrollUp JS
-		============================================ -->
-  <script src="plugins/jquery.scrollUp.min.js"></script>
-  <!-- mCustomScrollbar JS
-		============================================ -->
-  <script src="plugins/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
-  <script src="plugins/scrollbar/mCustomScrollbar-active.js"></script>
-  <!-- metisMenu JS
-		============================================ -->
-  <script src="plugins/metisMenu/metisMenu.min.js"></script>
-  <script src="plugins/metisMenu/metisMenu-active.js"></script>
-  <!-- sparkline JS
-		============================================ -->
-  <script src="plugins/sparkline/jquery.sparkline.min.js"></script>
-  <script src="plugins/sparkline/jquery.charts-sparkline.js"></script>
-  <!-- calendar JS
-		============================================ -->
-  <script src="plugins/calendar/moment.min.js"></script>
-  <script src="plugins/calendar/fullcalendar.min.js"></script>
-  <script src="plugins/calendar/fullcalendar-active.js"></script>
-  <!-- float JS
-		============================================ -->
-  <script src="plugins/flot/jquery.flot.js"></script>
-  <script src="plugins/flot/jquery.flot.resize.js"></script>
-  <script src="plugins/flot/curvedLines.js"></script>
-  <script src="plugins/flot/flot-active.js"></script>
-  <!-- plugins JS
-		============================================ -->
-  <script src="plugins/plugins.js"></script>
-  <!-- main JS
-		============================================ -->
-  <script src="plugins/main.js"></script>
-  <script src="js/actions/switcher.js" type="module"></script>
+  <!-- REQUIRED SCRIPTS -->
+ 
+  <!--<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>-->
+  <!-- jQuery -->
+  <script src="plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- overlayScrollbars -->
+  <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="dist/js/adminlte.js"></script>
+
+  <!-- SweetAlert2 -->
+  <script src="plugins/sweetalert2/sweetalert2.min.js"></script>
+
+  <!-- DataTables  & Plugins -->
+  <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+
+  <!-- PAGE PLUGINS -->
+  <!-- jQuery Mapael -->
+  <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+  <script src="plugins/raphael/raphael.min.js"></script>
+  <script src="plugins/jquery-mapael/jquery.mapael.min.js"></script>
+  <script src="plugins/jquery-mapael/maps/usa_states.min.js"></script>
+  <!-- Bootstrap4 Duallistbox -->
+  <script src="plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+  <!-- InputMask -->
+  <script src="plugins/moment/moment.min.js"></script>
+  <script src="plugins/inputmask/jquery.inputmask.min.js"></script>
+  <!-- date-range-picker -->
+  <script src="plugins/daterangepicker/daterangepicker.js"></script>
+
+  <!-- Tempusdominus Bootstrap 4 -->
+  <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.js"></script>
+  <!-- Bootstrap Switch -->
+  <script src="plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+  <!-- BS-Stepper -->
+  <script src="plugins/bs-stepper/js/bs-stepper.min.js"></script>
+  <!-- dropzonejs -->
+  <script src="plugins/dropzone/min/dropzone.min.js"></script>
+  <!-- ChartJS -->
+  <script src="plugins/chart.js/Chart.min.js"></script>
+  <!--Apex Charts -->
+  <!--<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>-->
+
+  <script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <!-- Select2 -->
+  <script src="plugins/select2/js/select2.full.min.js"></script>
+  <script src="dist/js/modernizr.2.7.1.js"></script>
+  <script src="js/actions/main.js" type="module"></script>
+  <script src="js/services/users.js" type="module"></script>
+  <script src="js/services/api-client.js" type="module"></script>
+  <script src="js/actions/user_management.js" type="module"></script>
+  <script src="js/actions/dashboard.js" type="module"></script>
+
+
+  <script>
+   
+  </script>
+
+
 </body>
 
 </html>

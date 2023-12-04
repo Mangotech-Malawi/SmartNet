@@ -1,62 +1,50 @@
-import { loadContent } from "../contentHub/contentLoader.js";
-import { content_view } from "../contentHub/content.js";
-import { links } from "../contentHub/links.js";
 
-let user_role = sessionStorage.getItem("role");
+import { content_view } from "../app-views/content.js";
+import { links } from "../app-views/links.js";
+import { loadContent } from "../actions/contentLoader.js";
+import * as users from "../services/users.js";
+import * as dashboard  from "../actions/dashboard.js";
 
-const mainContent = "mainContainer";
+const mainContent = "mainContent";
 const modalContent = "modalContent";
 
 selectContent(localStorage.getItem("state"));
 
 $(document).ready(function () {
-
-    //Loads links according to the
     if (sessionStorage.getItem("role") != null) {
-        loadLinks(user_role);
+        loadLinks(sessionStorage.getItem("role"));
     }
 
-    //The folloing are cases links
     $("#dashboard").on("click", function (e) {
-        selectContent("admin_dashboard");
+        selectContent("dashboard");
     });
 
-    //The following are cases links
+    $("#response-actions").on("click", function (e) {
+        selectContent("response_actions");
+    });
+
     $("#intrusions").on("click", function (e) {
         selectContent("intrusions");
     });
 
-
-    //The following are cases links
-    $("#intrusion-responses").on("click", function (e) {
-        selectContent("intrusion_responses");
-    });
-
-    //The following are cases links
     $("#network-events").on("click", function (e) {
         selectContent("network_events");
     });
 
-    //The following are cases links
+    $("#events").on("click", function (e) {
+        selectContent("events");
+    });
+
     $("#devices").on("click", function (e) {
         selectContent("devices");
     });
 
-    //The following are cases links
     $("#custodians").on("click", function (e) {
         selectContent("custodians");
     });
 
-
-    //The following are cases links
     $("#users").on("click", function (e) {
         selectContent("users");
-    });
-
-
-    $("#logout").on("click", function (e) {
-        sessionStorage.clear();
-        window.location = "index.html";
     });
 
 });
@@ -74,37 +62,43 @@ function loadLinks(user_role) {
 }
 
 export function selectContent(state) {
-
     for (let index = 0; index < content_view.length; index++) {
         if (state === content_view[index].state) {
-            loadOtherContent(state, index)
-            break;
+            loadOtherContent(state, index);
         }
     }
 }
 
-
 function loadOtherContent(state, index) {
+    console.log(state)
+    $.when(loadContent(mainContent, state, content_view[index].link,
+        content_view[index].title)).done(
+            function () {
+                if (
+                    content_view[index].modals != null &&
+                    typeof content_view[index].modals != undefined
+                ) {
 
-    $.when(loadContent(mainContent, state, content_view[index].link)).done(
-        function () {
-            if (
-                content_view[index].modals != null &&
-                typeof content_view[index].modals != undefined
-            ) {
+                    $(`#${modalContent}`).html("");
 
-                $(`#${modalContent}`).html("");
+                    $.each(content_view[index].modals, function (key, modal_path) {
+                        $.when(loadContent(modalContent, "", modal_path)).done(
+                            function () { }
+                        );
+                    });
 
-                $.each(content_view[index].modals, function (key, modal_path) {
-                    $.when(loadContent(modalContent, "", modal_path)).done(
-                        function () { }
-                    );
-                });
+                }
+                let user_id = sessionStorage.getItem("user_id");
 
+                switch (state) {
+                    case "users":
+                        users.loadUsersTable(users.fetchUsers());
+                        break;
+                    case "dashboard":
+                        //dashboard.loadDashboardData();
+                        console.log("sdsd");
+                        break;
+                }
             }
-
-            $("#title").text(content_view[index].title)
-            $("#subtitle").text(content_view[index].subtitle)
-        }
-    );
+        );
 }

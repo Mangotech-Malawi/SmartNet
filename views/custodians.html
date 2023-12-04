@@ -1,72 +1,47 @@
-<div class="product-status mg-b-30">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="product-status-wrap">
-                    <h4>Custodians List</h4>
-                    <div class="add-product">
-                        <a href="addArtist.php">Add Custodian</a>
-                    </div>
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Custodians</h3>
+            <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-12 text-right">
+                    <!-- Button for calling add organisation modal -->
 
-                    <table id="artistsTable" class="" class="display">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
-                                <th>Gender</th>
-                                <th>DateOfBirth</th>
-                                <th>Nationality</th>
-                                <th>Reg. Date</th>
-                                <th>Song</th>
-                                <th>Album</th>
-                                <th>Ep</th>
-                                <th>Edit</th>
-                                <th>Del</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Sample static data for demonstration purposes -->
-                            <tr>
-                                <td>Artist Name</td>
-                                <td>First Name</td>
-                                <td>Last Name</td>
-                                <td>Male</td>
-                                <td>DOB</td>
-                                <td>Nationality</td>
-                                <td>Reg. Date</td>
-                                <td><button class="ps-setting">Add+</button></td>
-                                <td><button class="pd-setting">Add+</button></td>
-                                <td><button class="ds-setting">Add+</button></td>
-                                <td><button data-toggle="tooltip" title="Edit" class="pd-setting-ed"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button></td>
-                                <td><button data-toggle="tooltip" title="Delete" class="pd-setting-ed"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
-                            </tr>
-                            <!-- Add more rows as needed -->
-                        </tbody>
-                        <tfooter>
-                            <tr>
-                                <th>Name</th>
-                                <th>Firstname</th>
-                                <th>Lastname</th>
-                                <th>Gender</th>
-                                <th>DateOfBirth</th>
-                                <th>Nationality</th>
-                                <th>Reg. Date</th>
-                                <th>Song</th>
-                                <th>Album</th>
-                                <th>Ep</th>
-                                <th>Edit</th>
-                                <th>Del</th>
-                            </tr>
-                        </tfooter>
-                    </table>
-
+                    <button type="button" class="btn bg-gradient-success text-left" id="uploadClients"
+                        data-toggle="modal" data-target='#modal-device' data-button-type="add">
+                        <i class="fa fa-plus-square"></i> Add Custodian
+                    </button>
                 </div>
             </div>
+
         </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="eventsTable" class="table  table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>District</th>
+                        <th>View Users</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot>
+                
+                    <tr>
+                        <th>Name</th>
+                        <th>District</th>
+                        <th>View Users</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                
+                </tfoot>
+            </table>
+        </div>
+        <!-- /.card-body -->
     </div>
+    <!-- /.card -->
 </div>
-<script>
-    // Activate DataTables on your table
- 
-</script>
